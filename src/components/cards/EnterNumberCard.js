@@ -11,8 +11,8 @@ const EnterNumberCard = (props) => {
         <Input
           isRequired={true}
           placeholder="Enter Number"
-          placeholderTextColor="grey.400"
-          color="grey.800"
+          placeholderTextColor="gray.400"
+          color="gray.800"
           fontWeight="500"
           fontSize="lg"
           width={200}

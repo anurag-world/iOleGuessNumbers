@@ -106,10 +106,7 @@ export default function StartGameScreen({ navigation }) {
         <Center width="100%" mt={8}>
           {!selectNumber ? (
             <View width={150}>
-              <Button
-                colorScheme="secondary"
-                onPress={() => handleSubmit(number)}
-              >
+              <Button colorScheme="gray" onPress={() => handleSubmit(number)}>
                 Confirm
               </Button>
             </View>
@@ -126,7 +123,7 @@ export default function StartGameScreen({ navigation }) {
               >
                 Start Game
               </Button>
-              <Button colorScheme="grey" onPress={reset}>
+              <Button colorScheme="gray" onPress={reset}>
                 Reset
               </Button>
             </View>

@@ -22,13 +22,21 @@ const GameHandler = () => {
 
         <Stack.Screen
           name="GameOverWin"
-          options={{ title: 'iOle Mini Games', headerBackVisible: false }}
+          options={{
+            title: 'iOle Mini Games',
+            headerBackVisible: false,
+            gestureEnabled: false,
+          }}
         >
           {(props) => <GameOverWin {...props} />}
         </Stack.Screen>
         <Stack.Screen
           name="GameOverLose"
-          options={{ title: 'iOle Mini Games', headerBackVisible: false }}
+          options={{
+            title: 'iOle Mini Games',
+            headerBackVisible: false,
+            gestureEnabled: false,
+          }}
         >
           {(props) => <GameOverLose {...props} />}
         </Stack.Screen>

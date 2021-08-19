@@ -42,7 +42,10 @@ const GameOverScreen = ({ route, navigation }) => {
         <Button
           colorScheme="secondary"
           onPress={() => {
-            navigation.navigate('Home')
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Home' }],
+            })
           }}
         >
           Play Again
