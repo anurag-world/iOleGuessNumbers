@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Radio,
   Center,
@@ -22,6 +22,7 @@ export default function StartGameScreen({ navigation }) {
   const [number, setNumber] = useState()
   const [selectNumber, setSelectNumber] = useState('')
   const [errors, setErrors] = useState('')
+  const [userSelectedRounds, setUserSelectedRounds] = useState(0)
 
   const reset = () => {
     setSelectNumber('')
@@ -65,6 +66,10 @@ export default function StartGameScreen({ navigation }) {
   const onChangeNumber = (props) => {
     handleValidation(props)
     setNumber(props)
+  }
+
+  const selectedRounds = (props) => {
+    setUserSelectedRounds(props)
   }
 
   return (
@@ -117,6 +122,7 @@ export default function StartGameScreen({ navigation }) {
                 onPress={() => {
                   navigation.navigate('GameScreen', {
                     userNumber: selectNumber,
+                    userSelectedRounds: userSelectedRounds,
                   })
                 }}
                 mb={3}
@@ -131,14 +137,31 @@ export default function StartGameScreen({ navigation }) {
         </Center>
 
         {/* Game Information */}
-        {!selectNumber ? <GameDetails /> : <SelectDifficulty />}
+        {!selectNumber ? (
+          <GameDetails />
+        ) : (
+          <SelectDifficulty selectedRounds={selectedRounds} />
+        )}
       </ScreenContainer>
     </>
   )
 }
 
-const SelectDifficulty = () => {
-  const [value, setValue] = React.useState('easy')
+const SelectDifficulty = (props) => {
+  const [value, setValue] = useState('easy')
+  const [rounds, setRounds] = useState(0)
+
+  useEffect(() => {
+    value === 'easy'
+      ? setRounds(4)
+      : value === 'medium'
+      ? setRounds(8)
+      : setRounds(12)
+  }, [value])
+
+  useEffect(() => {
+    props.selectedRounds(rounds)
+  })
 
   return (
     <Center width="100%" mt={8}>
@@ -167,14 +190,15 @@ const SelectDifficulty = () => {
             </Text>
           </Radio>
         </HStack>
-        <Center w="100%" mt={5}>
-          <Radio size="md" value="dondie" accessibilityLabel="hard">
-            <Text color="secondary.600" fontSize="md" ml={2} bold>
-              Do or Die (1 Round)
-            </Text>
-          </Radio>
-        </Center>
       </Radio.Group>
+      <View>
+        <Text mt={8} fontSize="xl" bold>
+          Number of Rounds:{' '}
+          <Text color="primary.700" fontSize="xl" bold>
+            {rounds}
+          </Text>
+        </Text>
+      </View>
     </Center>
   )
 }

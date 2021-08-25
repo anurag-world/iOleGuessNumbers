@@ -22,7 +22,7 @@ const generateRandomNumbers = (min, max, exclude) => {
 // Main App Function
 
 const GameScreen = ({ route, navigation }) => {
-  const { userNumber } = route.params
+  const { userNumber, userSelectedRounds } = route.params
 
   const [userSelectedNumber, setUserSelectedNumber] = useState(userNumber)
 
@@ -37,7 +37,7 @@ const GameScreen = ({ route, navigation }) => {
   //  Winning Conditions based on Rounds
 
   useEffect(() => {
-    if (rounds === 6 && currentGuess !== userSelectedNumber) {
+    if (rounds === userSelectedRounds && currentGuess !== userSelectedNumber) {
       navigation.navigate('GameOverWin', {
         rounds: rounds,
       })
@@ -83,6 +83,11 @@ const GameScreen = ({ route, navigation }) => {
     <ScreenContainer title="Number Guessing Game">
       {console.log(rounds)}
       {/* Opponent's Guess Card */}
+      <Center mb={5}>
+        <Text fontSize="lg" fontWeight="500">
+          Rounds Selected: {userSelectedRounds}
+        </Text>
+      </Center>
       <Center width="100%">
         <Pressable
           bg="secondary.500"
