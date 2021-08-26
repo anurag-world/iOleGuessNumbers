@@ -27,7 +27,7 @@ const GameOverScreen = ({ route, navigation }) => {
           },
         }}
       >
-        <Avatar size={200} source={require('../../assets/win.jpg')} mb={8} />
+        <Avatar size={200} source={require('../../assets/win.png')} mb={8} />
       </PresenceTransition>
       <Heading fontSize="xl" mb={4} color="fontLight">
         Congratulations!

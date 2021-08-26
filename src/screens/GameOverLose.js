@@ -30,7 +30,7 @@ const GameOverScreen = ({ route, navigation }) => {
           },
         }}
       >
-        <Avatar size={200} source={require('../../assets/lose.jpg')} my={8} />
+        <Avatar size={200} source={require('../../assets/lose.png')} my={8} />
       </PresenceTransition>
       <Heading fontSize="2xl" mb={4} color="fontLight">
         Game Over!
