@@ -8,6 +8,7 @@ import {
   HStack,
   PresenceTransition,
 } from 'native-base'
+import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import GameDetails from '../components/GameDetails'
 
 // Common
@@ -78,70 +79,76 @@ export default function StartGameScreen({ navigation }) {
 
       <ScreenContainer title="Number Guessing Game">
         {/* Section */}
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View>
+            <Center width="100%">
+              {/* Enter Number Card */}
 
-        <Center width="100%">
-          {/* Enter Number Card */}
+              {!selectNumber ? (
+                <EnterNumberCard value={number} onChangeText={onChangeNumber} />
+              ) : (
+                <PresenceTransition
+                  visible="show"
+                  initial={{
+                    opacity: 0,
+                    scale: 0,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      duration: 300,
+                    },
+                  }}
+                >
+                  <CurrentNumberCard selectNumber={selectNumber} />
+                </PresenceTransition>
+              )}
 
-          {!selectNumber ? (
-            <EnterNumberCard value={number} onChangeText={onChangeNumber} />
-          ) : (
-            <PresenceTransition
-              visible="show"
-              initial={{
-                opacity: 0,
-                scale: 0,
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transition: {
-                  duration: 300,
-                },
-              }}
-            >
-              <CurrentNumberCard selectNumber={selectNumber} />
-            </PresenceTransition>
-          )}
+              {errors !== '' && <Error errors={errors} mt={5} />}
+            </Center>
 
-          {errors !== '' && <Error errors={errors} mt={5} />}
-        </Center>
+            {/* Buttons */}
 
-        {/* Buttons */}
+            <Center width="100%" mt={8}>
+              {!selectNumber ? (
+                <View width={150}>
+                  <Button
+                    colorScheme="gray"
+                    onPress={() => handleSubmit(number)}
+                  >
+                    Confirm
+                  </Button>
+                </View>
+              ) : (
+                <View width={150}>
+                  <Button
+                    colorScheme="secondary"
+                    onPress={() => {
+                      navigation.navigate('GameScreen', {
+                        userNumber: selectNumber,
+                        userSelectedRounds: userSelectedRounds,
+                      })
+                    }}
+                    mb={3}
+                  >
+                    Start Game
+                  </Button>
+                  <Button colorScheme="gray" onPress={reset}>
+                    Reset
+                  </Button>
+                </View>
+              )}
+            </Center>
 
-        <Center width="100%" mt={8}>
-          {!selectNumber ? (
-            <View width={150}>
-              <Button colorScheme="gray" onPress={() => handleSubmit(number)}>
-                Confirm
-              </Button>
-            </View>
-          ) : (
-            <View width={150}>
-              <Button
-                colorScheme="secondary"
-                onPress={() => {
-                  navigation.navigate('GameScreen', {
-                    userNumber: selectNumber,
-                    userSelectedRounds: userSelectedRounds,
-                  })
-                }}
-                mb={3}
-              >
-                Start Game
-              </Button>
-              <Button colorScheme="gray" onPress={reset}>
-                Reset
-              </Button>
-            </View>
-          )}
-        </Center>
-
-        {/* Game Information */}
-        {!selectNumber ? (
-          <GameDetails />
-        ) : (
-          <SelectDifficulty selectedRounds={selectedRounds} />
-        )}
+            {/* Game Information */}
+            {!selectNumber ? (
+              <GameDetails />
+            ) : (
+              <SelectDifficulty selectedRounds={selectedRounds} />
+            )}
+          </View>
+        </TouchableWithoutFeedback>
       </ScreenContainer>
     </>
   )

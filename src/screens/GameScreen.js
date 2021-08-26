@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Alert } from 'react-native'
+import { Alert, Dimensions } from 'react-native'
 import { Center, Pressable, Heading, Text } from 'native-base'
 import ScreenContainer from '../common/ScreenContainer'
 import CardContainer from '../components/cards/CardContainer'
+
+// Device Height
+const deviceHeight = Dimensions.get('window').height
 
 // Generate Random Number
 
@@ -23,6 +26,7 @@ const generateRandomNumbers = (min, max, exclude) => {
 
 const GameScreen = ({ route, navigation }) => {
   const { userNumber, userSelectedRounds } = route.params
+  const title = `Rounds: ${userSelectedRounds}`
 
   const [userSelectedNumber, setUserSelectedNumber] = useState(userNumber)
 
@@ -80,23 +84,18 @@ const GameScreen = ({ route, navigation }) => {
   }
 
   return (
-    <ScreenContainer title="Number Guessing Game">
+    <ScreenContainer title={title}>
       {console.log(rounds)}
       {/* Opponent's Guess Card */}
-      <Center mb={5}>
-        <Text fontSize="lg" fontWeight="500">
-          Rounds Selected: {userSelectedRounds}
-        </Text>
-      </Center>
       <Center width="100%">
         <Pressable
           bg="secondary.500"
           _pressed={{
             bg: 'secondary.600',
           }}
-          width={160}
-          height={160}
-          borderRadius={160}
+          width={deviceHeight < '800' ? 120 : 160}
+          height={deviceHeight < '800' ? 120 : 160}
+          borderRadius={deviceHeight < '800' ? 120 : 160}
           alignItems="center"
           justifyContent="center"
           onPress={nextGuessHandler.bind(this, 'greater')}
@@ -108,7 +107,10 @@ const GameScreen = ({ route, navigation }) => {
       </Center>
 
       <Center width="100%" my={10}>
-        <CardContainer width={240} height={180}>
+        <CardContainer
+          width={deviceHeight < '800' ? 200 : 240}
+          height={deviceHeight < '800' ? 160 : 180}
+        >
           <Heading fontSize="lg" color="fontLight" mb={2}>
             Opponent's Guess
           </Heading>
@@ -125,9 +127,9 @@ const GameScreen = ({ route, navigation }) => {
           _pressed={{
             bg: 'secondary.600',
           }}
-          width={160}
-          height={160}
-          borderRadius={160}
+          width={deviceHeight < '800' ? 120 : 160}
+          height={deviceHeight < '800' ? 120 : 160}
+          borderRadius={deviceHeight < '800' ? 120 : 160}
           alignItems="center"
           justifyContent="center"
           onPress={nextGuessHandler.bind(this, 'lower')}

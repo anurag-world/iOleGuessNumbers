@@ -11,19 +11,25 @@ const Stack = createNativeStackNavigator()
 const GameHandler = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" options={{ title: 'iOle Mini Games' }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: true,
+          headerTitle: 'iOle Mini Games',
+          headerShadowVisible: true,
+          headerTitleAlign: 'center',
+        }}
+      >
+        <Stack.Screen name="Home">
           {(props) => <StartGameScreen {...props} />}
         </Stack.Screen>
 
-        <Stack.Screen name="GameScreen" options={{ title: 'iOle Mini Games' }}>
+        <Stack.Screen name="GameScreen">
           {(props) => <GameScreen {...props} />}
         </Stack.Screen>
 
         <Stack.Screen
           name="GameOverWin"
           options={{
-            title: 'iOle Mini Games',
             headerBackVisible: false,
             gestureEnabled: false,
           }}
@@ -33,7 +39,6 @@ const GameHandler = () => {
         <Stack.Screen
           name="GameOverLose"
           options={{
-            title: 'iOle Mini Games',
             headerBackVisible: false,
             gestureEnabled: false,
           }}
